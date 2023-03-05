@@ -1,0 +1,9 @@
+def calc(a, operation, b):
+    if (operation == "add"):
+        return a + b
+    if (operation == "sub"):
+        return a - b
+    if (operation == "mult"):
+        return a * b
+    if (operation == "dif"):
+        return a / b
