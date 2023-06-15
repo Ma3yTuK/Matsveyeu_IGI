@@ -46,8 +46,8 @@ class Packer:
             return self._pack_module(obj)
         elif inspect.isclass(obj):
             return self._pack_class(obj)
-        #elif isinstance(obj,property):
-        #    return self._pack_property(obj)
+        elif isinstance(obj,property):
+            return self._pack_property(obj)
         elif isinstance(obj,object):
             return self._pack_object(obj)
         else:
@@ -146,7 +146,6 @@ class Packer:
 
     
     def _pack_property(self,obj):
-        print('fuck1')
         stored = dict()
         stored["fget"] = self.pack(obj.fget)
         stored["fset"] = self.pack(obj.fset)
@@ -195,10 +194,8 @@ class Packer:
                     case 'class':
                         return self._unpack_class(obj)
                     case 'property':
-                        print("fuck")
                         return self._unpack_property(obj)
                     case 'object':
-                        print("fuck")
                         return self._unpack_object(obj)
                     case 'tuple':
                         return tuple(self.unpack(item) for item in obj['__packer_storage__'])

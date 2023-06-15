@@ -68,27 +68,25 @@ print(c_des.prop)
 print(C_des.stat())
 print(c_des.class_meth())
 
-def gen(n):
-    a = 2
-    for i in range(n):
-        a *= a
-        yield a
+# def gen(n):
+#     a = 2
+#     for i in range(n):
+#         a *= a
+#         yield a
 
-def rec(n):
-    if not n:
-        return
-    return rec(not n)
+# def rec(n):
+#     if not n:
+#         return
+#     return rec(not n)
 
-t = ser.dumps(gen(4))
-r = ser.loads(t)
-rec = ser.dumps(rec)
-rec = ser.loads(rec)
+# t = ser.dumps(gen(4))
+# r = ser.loads(t)
+# rec = ser.dumps(rec)
+# rec = ser.loads(rec)
 
-print(next(r))
-rec(True)
+# print(next(r))
+# rec(True)
 
-f = C(1, 2)
-print(f.my_sin(11))
 
 def main():
     serializer = Json()
