@@ -4,7 +4,7 @@ from .consts import PRIMITIVE_TYPES,IGNORE_CODE,IGNORE_DUNDER,IGNORE_TYPES
 
 class Packer:
 
-    processed_class_obj=None
+    processed_class_obj=None 
 
     def __is_iter(self,obj):
         return hasattr(obj,'__iter__') and hasattr(obj,'__next__')
@@ -46,6 +46,8 @@ class Packer:
             return self._pack_module(obj)
         elif inspect.isclass(obj):
             return self._pack_class(obj)
+        #elif isinstance(obj,property):
+        #    return self._pack_property(obj)
         elif isinstance(obj,object):
             return self._pack_object(obj)
         else:
@@ -143,6 +145,18 @@ class Packer:
         }
 
     
+    def _pack_property(self,obj):
+        print('fuck1')
+        stored = dict()
+        stored["fget"] = self.pack(obj.fget)
+        stored["fset"] = self.pack(obj.fset)
+        stored["fdel"] = self.pack(obj.fdel)
+        return{
+            '__type__':'property',
+            '__packer_storage__':stored
+        }
+
+
     def _pack_object(self,obj):
         stored={
             '__class__':self.pack(obj.__class__),
@@ -180,7 +194,11 @@ class Packer:
                         return self._unpack_module(obj)
                     case 'class':
                         return self._unpack_class(obj)
+                    case 'property':
+                        print("fuck")
+                        return self._unpack_property(obj)
                     case 'object':
+                        print("fuck")
                         return self._unpack_object(obj)
                     case 'tuple':
                         return tuple(self.unpack(item) for item in obj['__packer_storage__'])
@@ -232,7 +250,7 @@ class Packer:
 
         innards = {}
         for key,value in stored.items():
-            if not self.__is_func(value) and not isinstance(value,dict):
+            if not self.__is_func(value):
                 innards[key] = self.unpack(value)
 
         new_class = type(stored['__name__'],bases,innards)
@@ -248,6 +266,11 @@ class Packer:
                 setattr(new_class,key,func)
 
         return new_class
+
+
+    def _unpack_property(self,obj):
+        stored = obj['__packer_storage__']
+        return property(self.unpack(stored['fget']), self.unpack(stored['fset']), self.unpack(stored['fdel']))
 
 
     def _unpack_object(self,obj):
