@@ -1,0 +1,7 @@
+@import "base.css";
+
+textarea {
+    font-family: 'Tangerine', serif;
+    width: 100%;
+    font-size: 40px;
+}

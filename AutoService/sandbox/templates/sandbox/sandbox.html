@@ -1,0 +1,110 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'sandbox/sandbox.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="offset-sm-2 col-sm-8 update-container">
+            <h1>Sandbox</h1>
+            <ul style="margin-top: 30px">
+                <li id="abb">
+                    <h2>Abbreviation</h2>
+                    <p style="margin: 10px;"><abbr title="United States of Americe">USA</abbr> is abbreviation</p>
+                </li>
+                <li>
+                    <h2>Definition</h2>
+                    <p><dfn title="United States of Americe">USA</dfn> is a country.</p> 
+                </li>
+                <li>
+                    <h2>Quote</h2>
+                    <q cite="https://en.wikipedia.org/wiki/Murasaki_Shikibu">
+                        After several years, she left court and retired with Shōshi to the Lake Biwa region. Within a decade 
+                        of its completion, Genji was distributed throughout the provinces; within a century it was recognized as a classic of 
+                        Japanese literature and became the subject of scholarly criticism.
+                    </q> 
+                </li>
+                <li>
+                    <h2>Figure</h2>
+                    <figure style="width: 40%; background-color: black; padding: 20px">
+                        <img src='/media/authentication/models/users/default.jpg' usemap='#planetmap' width = 100% height = 100%>
+                        <figcaption style="text-align: center; color: red;">Default profile picture</figcaption>
+                    </figure>
+                </li>
+                <li>
+                    <h2>IFrame</h2>
+                    <iframe src='https://pm.by/ru/' width="100%" height="300" style="border:1px solid black;"></iframe>
+                </li>
+                <li>
+                    <h2>Audio</h2>
+                    <figure>
+                        <figcaption>Listen to sound:</figcaption>
+                        <audio controls>
+                            <source src={% static 'sandbox/audio/sound.mp3' %} type='audio/mp3'>
+                            Error
+                        </audio>
+                    </figure>
+                </li>
+                <li>
+                    <h2>Download</h2>
+                    <figure>
+                        <a href={% static 'sandbox/audio/sound.mp3' %} download> Download audio</a>
+                    </figure>
+                </li>
+                <li>
+                    <h2>Anchor</h2>
+                    <figure>
+                        <a href='#abb'>Go to abbreviation</a>
+                    </figure>
+                </li>
+                <li>
+                    <h2>Navigation</h2>
+                    <nav>
+                        <ul>
+                            <li><a href="#section-1">Section 1</a></li>
+                            <li><a href="#section-2">Section 2</a></li>
+                            <li><a href="#section-3">Section 3</a></li>
+                            <li><a href="#section-4">Section 4</a></li>
+                        </ul>
+                    </nav>
+                    <nav>
+                        <ul>
+                            <li style="display: inline; margin: 1%;"><a href="#section-1">Section 1</a></li>
+                            <li style="display: inline; margin: 1%;"><a href="#section-2">Section 2</a></li>
+                            <li style="display: inline; margin: 1%;"><a href="#section-3">Section 3</a></li>
+                        </ul>
+                    </nav>
+                </li>
+                <li>
+                    <h2>Input</h2>
+                    <ol>
+                        <form action="#abb">
+                            <label for="checkbox">checkbox</label><br>
+                            <input type="checkbox" id="checkbox"><br>
+
+                            <label for="text">text</label><br>
+                            <input type="text" id="text" required pattern="375[0-9]{9,9}"><br>
+
+                            <label for="date">date</label><br>
+                            <input required type="date" id="date"><br>
+
+                            <label for="email">email</label><br>
+                            <input type="email" id="email"><br>
+                            
+                            <label for="select">select</label><br>
+                            <select id="select">
+                                <option value="first">first<option>
+                            </select>
+                            <br>
+                            <button type="submit">submit</button>
+                    </ol>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

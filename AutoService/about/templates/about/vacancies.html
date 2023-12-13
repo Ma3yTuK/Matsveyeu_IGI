@@ -1,0 +1,29 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'about/vacancies.css' %}">
+{% endblock %}
+
+{% block content %}
+<div>
+    <div style="margin-left: 15%; width: 70%;" class="update-container">
+        <h2>Vacancies:</h2>
+        <ul>
+        {% for vacancy in vacancy_list %}
+        <li class="mt-4">
+            <strong>Vacancy: </strong>{{ vacancy.name }}<br>
+            {% if vacancy.info %}
+            <strong>Description: </strong>{{ vacancy.info }}
+            {% endif %}
+        </li>
+        {% empty %}
+            <strong>There are no available vacancies.</strong>
+        {% endfor %}
+        </ul>
+        <hr style="height: 5px; background: black; width: 80%; margin: 20px auto;">
+        <p style="text-align: center;">{{ quote }}</p>
+    </div>
+</div>
+{% endblock %}

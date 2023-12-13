@@ -1,0 +1,36 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'polls/part.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-sm">
+    <div style="margin-left: 20%; width: 60%;" class="update-container">
+        <h1 class="margin-top: 2%">{{ part.name }}</h1>
+        <div class="margin-top: 2%">
+            <div style="display: inline-block; width: 40%;">
+                <img src="{{ part.image.url }}" class="img-fluid" alt="{{ part.name }} Image">
+            </div>
+            <div style="margin-left: 5%; display: inline-block; width: 40%;">
+                <h2 class="text-muted">Type: {{ part.parttype }}</h2>
+                <h2 class="text-muted">Price: {{ part.price }} BYN</h2>
+            </div>
+        </div>
+        <h3 style="margin-top: 2%;">Compatible devices:</h3>
+        <ul>
+            {% for device in part.devices.all %}
+            <li>
+                <p>{{ device.name }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+        {% if part.info %}
+        <h4 style="margin-top: 2%;">Additional info:</h4>
+        <p>{{ part.info }}</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

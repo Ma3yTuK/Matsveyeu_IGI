@@ -1,0 +1,15 @@
+@import "base.css";
+
+.flex-container {
+    display: flex;
+    height: 200px;
+}
+
+.left {
+    width: auto; 
+}
+
+.right {
+    height: 100%;
+    margin-left: auto;
+}

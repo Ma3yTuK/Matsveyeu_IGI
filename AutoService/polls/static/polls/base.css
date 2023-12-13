@@ -1,0 +1,6 @@
+@import "../base/global.css";
+
+.filter-container {
+    padding: 20px;
+    background-color: #cae9f5;
+}

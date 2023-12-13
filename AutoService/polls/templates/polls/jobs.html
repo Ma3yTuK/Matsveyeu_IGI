@@ -1,0 +1,46 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'polls/jobs.css' %}">
+{% endblock %}
+
+{% block content %}
+<div>
+    <div style="margin-left: 10%; width: 80%;" class="update-container">
+        <h2>Jobs:</h2>
+        {% if object_list %}
+        <table>
+            <caption><h3>Job table</h3></caption>
+            <tr>
+                <th>Service type</th>
+                <th>Device</th>
+                <th>Part</th>
+                <th>Date and time</th>
+                <th>User</th>
+                <th>User phone</th>
+            </tr>
+            {% for job in object_list %}
+            <tr>
+                <td>{{ job.service.servicetype.name }}</td>
+                <td>{{ job.device.name }}</td>
+                {% if job.service.servicetype.part_required %}
+                <td><a href={% url "polls:part" job.part.id %}>{{ job.part.name }}</a></td>
+                {% else %}
+                <td>-</td>
+                {% endif %}
+                <td>{{ job.datetime }}</td>
+                <td>{{ job.order.user }}</td>
+                <td>{{ job.order.user.number }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <strong>You don't have any jobs.</strong>
+        {%endif%}
+        <hr style="height: 5px; background: black; width: 80%; margin: 20px auto;">
+        <p style="text-align: center;">{{ quote }}</p>
+    </div>
+</div>
+{% endblock %}

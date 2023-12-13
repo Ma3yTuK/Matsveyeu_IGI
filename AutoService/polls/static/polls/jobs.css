@@ -1,0 +1,32 @@
+@import "base.css";
+
+table {
+    width: 100%;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+td:nth-child(1) {
+    background-color: yellow;
+}
+td:nth-child(2) {
+    background-color: red;
+}
+td:nth-child(3) {
+    background-color: blue;
+}
+td:nth-child(4) {
+    background-color: green;
+}
+td:nth-child(5) {
+    background-color: purple;
+}
+td:nth-child(6) {
+    background-color: orange;
+}

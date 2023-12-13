@@ -1,0 +1,56 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'polls/review.css' %}">
+{% endblock %}
+
+{% block content %}
+<div>
+    <div style="display: inline-block; margin-left: 20%; width: 60%;" class="update-container">
+        <h2 class="mb-4">Create review</h2>
+        <form method="post">
+        {% csrf_token %}
+            <div class="form-group">
+                <div style="display: inline-block; width: 65%;">
+                    {% if form.header.help_text %}
+                    <small class="form-text">{{ form.header.help_text }}</small><br>
+                    {% endif %}
+                    <div>
+                        {{ form.header }}
+                    </div>
+                    {% if form.header.errors %}
+                    <small class="form-text text-danger">{{ form.header.errors }}</small>
+                    {% endif %}
+                </div>
+                <div style="display: inline-block; width: 30%; margin: 1%;">
+                    {% if form.mark.help_text %}
+                    <small class="form-text">{{ form.mark.help_text }}</small><br>
+                    {% endif %}
+                    <div>
+                        <div>
+                            {{ form.mark }} /5
+                        </div>
+                    </div>
+                    {% if form.mark.errors %}
+                    <small class="form-text text-danger">{{ form.mark.errors }}</small>
+                    {% endif %}
+                </div>
+            </div>
+            <div style="width: 100%;">
+                {% if form.body.help_text %}
+                <small class="form-text">{{ form.body.help_text }}</small><br>
+                {% endif %}
+                {{ form.body }}
+                {% if form.body.errors %}
+                <small class="form-text text-danger">{{ form.body.errors }}</small>
+                {% endif %}
+            </div>
+            <div style="width: 100%;">
+                <button style="margin: 2% 44%;" type="submit">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

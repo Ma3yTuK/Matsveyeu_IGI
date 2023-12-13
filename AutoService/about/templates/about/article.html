@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'about/article.css' %}">
+{% endblock %}
+
+{% block content %}
+<div>
+    <div style="margin-left: 10%; width: 80%;" class="update-container">
+        <center><h1>{{ article.header }}</h1></center>
+        <div class="container">
+            <img style="width: 100%;" src="{{ article.image.url }}">
+            {{ article.body }}
+        </div>
+        <p style="font-size: 12px;" class="mb-3">{{ article.datetime }}</p>
+    </div>
+</div>
+{% endblock %}

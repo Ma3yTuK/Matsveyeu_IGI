@@ -1,0 +1,69 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'polls/cart.css' %}">
+{% endblock %}
+
+{% block content %}
+<div>
+    <div style="margin-left: 20%; width: 60%;" class="update-container">
+        <h2>Cart</h2>
+        <hr>
+        {% for part in cart.order.parts.all %}
+        <div>
+            <div style="display: inline-block; width: 50%; vertical-align: top;">
+                <strong>Part:</strong> <a href={% url "polls:part" part.id %}>{{ part.name }}</a><br>
+                <strong>Price:</strong> {{ part.price }} BYN<br>
+                <form action={% url "polls:cart_part_remove" part.id %}>
+                    {% csrf_token %}
+                    <input type="submit" value="Remove" />
+                </form>                
+            </div>
+            <div style="display: inline-block; width: 49%;">
+                <image style="width: 100%;" src="{{part.image.url}}" class="img-fluid" alt="{{ part.name }} Image">
+            </div>
+        </div>
+        <br>
+        {% empty %}
+            <p>Cart is empty</p>
+            <br>
+        {% endfor %}
+        <form action={% url "polls:parts" %}>
+            {% csrf_token %}
+            <input type="submit" value="Add" />
+        </form>   
+        <br>
+        <hr>
+        <form method="get">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ promo_form.promo.id_for_label }}" class="col-form-label">{{ promo_form.promo.label_tag }}</label>
+                <div style="display: inline-block; margin-left: 10%;">
+                    {{ promo_form.promo }}
+                    {% if promo_form.non_field_errors %}
+                    <small class="form-text text-danger">{{ promo_form.non_field_errors }}</small>
+                    {% endif %}
+                </div>
+                <div style="display: inline-block; width: 20%;">
+                    <button type="submit">Apply</button>
+                </div>
+            </div>
+            {% if cart.promo_invalid %}
+            <div class="alert alert-secondary">
+                Promo code requirements are not met
+            </div>
+            {% endif %}
+        </form>
+        <p><strong>Full price:</strong> {{ cart.calculate_price }}</p>
+        
+        {% if cart.order.parts.exists %}
+        <form action="{% url "polls:order_cart" %}">
+        {% csrf_token %}
+            <button type="submit">Make order</button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

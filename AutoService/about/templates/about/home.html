@@ -1,0 +1,128 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'about/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<div style="padding: 0; margin-top: 2%;">
+    <div style="display: inline-block; padding: 2%; margin-left: 18%; width: 60%;" class="update-container">
+        <div id="countdown"></div>
+        <img src="{% static 'base/images/icon.png' %}" class="icon" alt="logo">
+        <h1><strong>DreamService</strong></h1>
+        <hr style="margin-top: 2%">
+        <section>
+            <h2 style="margin-top: 1%">Last news</h2>
+            <article class="relative" style="margin-top: 2%; height: 1%;">
+                <div style="height: 100px; display: inline-block;">
+                    <image src="{{article.image.url}}" class="article-img">
+                </div>
+                <div style="height: 100px; display: inline-block; vertical-align: top" class="for-bottom-div">
+                    <strong>{{ article.header }}</strong><br>
+                    {{ article.datetime }}
+                    <form class="to-bottom" action={% url "about:article" article.id %}>
+                        {% csrf_token %}
+                        <input type="submit" class="margin-top: 1%;" value="Read more" />
+                    </form>
+                </div>
+            </article>
+        </section>
+        <hr class="margin-top: 2%">
+        <section>
+            <h2 class='margin-top: 2%;'>Partners</h2>
+            <div style="box-shadow: 10px 10px; vertical-align: top; display: inline-block; background: blue; border-radius: 50%; width: 100px; height: 100px;">
+                <a href="https://www.nvidia.com/en-us/">
+                    <img src={% static 'about/images/nvidia.png' %} style="margin-top: 35%; height: 30%;" alt="nvidia">
+                </a>
+            </div>
+            <div style="box-shadow: 10px 10px; vertical-align: top; display: inline-block; background: blue; border-radius: 50%; width: 100px; height: 100px;">
+                <a style="margin-left: 20px;" href="https://www.intel.com/content/www/us/en/support/ru-banner-inside.html">
+                    <img src={% static 'about/images/intel.png' %} style="margin-left: -15px; margin-top: 10%; height: 80%;", alt="intel">
+                </a>
+            </div>
+        </section>
+    </div>
+    <div class="animated-rotation" style="margin-top: 5%; display: inline-block; vertical-align: top; width: 16%; margin-left: 1%">
+        <a href="https://pm.by/ru/">
+            <img src={% static 'about/images/betera.png' %} style="width: 100%;" alt="betera">
+        </a>
+    </div>
+    <div class="animated-rotation" style="margin-top: 5%; display: none; vertical-align: top; width: 16%; margin-left: 1%">
+        <a href="https://parimatch.kz/">
+            <img src={% static 'about/images/pari.png' %} style="width: 100%;" alt="pari">
+        </a>
+    </div>
+</div>
+{% endblock %}
+{% block extrascript %}
+<script>
+    const banners = document.querySelectorAll('.animated-rotation');
+    let currentBanner = 0;
+    let rotationInterval = null;
+    let pageIsFocused = true;
+
+    function showBanner(index) {
+        banners.forEach((banner, i) => {
+            if (i === index) {
+                banner.setAttribute('style', 'margin-top: 5%; display: inline-block; vertical-align: top; width: 16%; margin-left: 1%');
+            } else {
+                banner.setAttribute('style', 'margin-top: 5%; display: none; vertical-align: top; width: 16%; margin-left: 1%');
+            }
+        });
+    }
+
+    function startRotation(time) {
+        rotationInterval = setInterval(() => {
+            if (pageIsFocused) {
+                currentBanner = (currentBanner + 1) % banners.length;
+                showBanner(currentBanner);
+            }
+        }, time);
+    }
+
+    window.addEventListener('focus', () => {
+        const rotationTime = parseInt({{ interval }});
+            if (!isNaN(rotationTime)) {
+                startRotation(rotationTime);
+            }
+    });
+    
+    window.addEventListener('blur', () => {
+        clearInterval(rotationInterval);
+    });
+
+    showBanner(currentBanner);
+    startRotation({{ interval }});
+</script>
+
+<script>
+    function startCountdown() {
+        const countdownDiv = document.getElementById('countdown');
+        const expirationTime = localStorage.getItem('expirationTime');
+
+        if (expirationTime) {
+            const now = new Date().getTime();
+            const timeLeft = new Date(expirationTime) - now;
+
+            if (timeLeft > 0) {
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                countdownDiv.innerHTML = `Time remaining: ${minutes} min ${seconds} sec`;
+            } else {
+                countdownDiv.innerHTML = 'Time is up';
+            }
+        } else {
+            const now = new Date().getTime();
+            const expirationTime = new Date(now + 3600000);
+            localStorage.setItem('expirationTime', expirationTime);
+            startCountdown();
+        }
+    }
+
+    startCountdown();
+    setInterval(startCountdown, 1000);
+</script>
+{% endblock %}

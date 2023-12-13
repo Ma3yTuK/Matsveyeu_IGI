@@ -1,0 +1,34 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'authentication/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-sm">
+    <div style="margin-left: 20%; width: 60%;" class="update-container">
+        <h2>Profile</h2>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+                <div>
+                    {{ field }}
+                    {% if field.errors %}
+                    <small class="form-text text-danger">{{ field.errors }}</small>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            <div class="form-group">
+                <div>
+                <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

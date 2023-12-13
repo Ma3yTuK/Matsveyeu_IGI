@@ -1,0 +1,38 @@
+@import "base.css";
+
+.article-img {
+    width: 100%;
+    height: auto;
+}
+
+.for-bottom-div {
+    position: relative;
+}
+
+.for-bottom-div .to-bottom {
+    position: absolute;
+    bottom: 0;
+}
+
+.icon { 
+    float: left; 
+    width: 5%;
+    height: auto;
+    margin-right: 30px; 
+} 
+
+@keyframes animation-rotate {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
+
+.relative {
+    position: relative;
+    left: 50px;
+}
+
+.animated-rotation {
+    transform: rotate(0deg);
+    animation-name: animation-rotate;
+    animation-duration: 4s;
+}

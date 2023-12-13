@@ -1,0 +1,70 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'sandbox/sandbox-css.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="offset-sm-2 col-sm-8 update-container">
+            <h1>Sandbox</h1>
+            <ul style="margin-top: 30px">
+                <li class="custom-marker">
+                    <h2>Quote</h2>
+                    <q lang="en" cite="https://en.wikipedia.org/wiki/Murasaki_Shikibu">
+                        After several years, she left court and retired with Shōshi to the Lake Biwa region. Within a decade 
+                        of its completion, Genji was distributed throughout the provinces; within a century it was recognized as a classic of 
+                        Japanese literature and became the subject of scholarly criticism.
+                    </q> <br>
+                    <q lang="ru" cite="https://en.wikipedia.org/wiki/Murasaki_Shikibu">
+                        Цитата на русском.
+                    </q> <br>
+                </li><br>
+                <li>
+                    <form>
+                        <label for="fname">Enabled:</label>
+                        <input type="text" id="fname"><br><br>
+                        <label for="lname">Disabled:</label>
+                        <input type="text" id="lname" disabled><br><br>
+                        <label for="num">From 1 to 10:</label>
+                        <input type="number" min="1" max="10" id="num"><br><br>
+                        <input type="submit">
+                    </form>
+                </li>
+                <li>
+                    <p class="big-text">
+                        Здесь должен быть очень очень очень длинный текст этооченьдлинноеслововочень&shy;длинномтекстедляпереноса. Здесь должен быть длинный текст этооченьдлинноеслововочень&shy;длинномтекстедляпереноса. Здесь должен быть длинный текст этооченьдлинноеслововочень&shy;длинномтекстедляпереноса.
+                        Здесь должен быть длинный текст этооченьдлинноеслововочень&shy;длинномтекстедляпереноса. Здесь должен быть длинный текст этооченьдлинноеслововочень&shy;длинномтекстедляпереноса. Здесь должен быть длинный текст этооченьдлинноеслововочень&shy;длинномтекстедляпереноса.
+                        Здесь должен быть длинный текст этооченьдлинноеслововочень&shy;длинномтекстедляпереноса. Здесь должен быть длинный текст этооченьдлинноеслововочень&shy;длинномтекстедляпереноса. Здесь должен быть длинный текст этооченьдлинноеслововочень&shy;длинномтекстедляпереноса.
+                        Здесь должен быть длинный текст этооченьдлинноеслововочень&shy;длинномтекстедляпереноса. Здесь должен быть длинный текст этооченьдлинноеслововочень&shy;длинномтекстедляпереноса. Здесь должен быть длинный текст этооченьдлинноеслововочень&shy;длинномтекстедляпереноса.
+                        Здесь должен быть длинный текст этооченьдлинноеслововочень&shy;длинномтекстедляпереноса. Здесь должен быть длинный текст этооченьдлинноеслововочень&shy;длинномтекстедляпереноса. Здесь должен быть длинный текст этооченьдлинноеслововочень&shy;длинномтекстедляпереноса.
+                        Здесь должен быть длинный текст этооченьдлинноеслововочень&shy;длинномтекстедляпереноса. Здесь должен быть длинный текст этооченьдлинноеслововочень&shy;длинномтекстедляпереноса. Здесь должен быть длинный текст этооченьдлинноеслововочень&shy;длинномтекстедляпереноса.
+                    </p>
+                    <p style="text-align: center;">
+                        Текст по центру.
+                    </p>
+                </li>
+                <li>
+                    <h3>z-index text</h3>
+                    <div class="z-index-container">
+                        <div class="z-index-1">
+                        </div>
+                        <div class="z-index-2">
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <h3>float/clear</h3>
+                    <div class="clear-container">
+                        <img class="float-img" src="{% static 'base/images/icon.png' %}">
+                        <p class="text-clear">This text is under the image</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

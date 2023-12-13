@@ -1,0 +1,9 @@
+@import "base.css";
+
+.bold {
+    font-weight: bold;
+}
+
+.container {
+    columns: 3 auto;
+}

@@ -1,0 +1,76 @@
+@import "base.css";
+
+q[lang~="en"] {
+    quotes: '\00AB' '\00BB' '\201E' '\201C';
+}
+
+q[lang~="ru"] {
+    quotes: none;
+}
+
+input:disabled {
+    background-color: red;
+}
+
+input:out-of-range {
+    background-color: rebeccapurple;
+}
+
+.custom-marker::marker {
+    content: '\00AB' '\00BB';
+}
+
+.z-index-container {
+    width: 200px;
+    height: 300px;
+    position: relative;
+}
+
+.z-index-1 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    left: 0;
+    background-image: linear-gradient(to bottom right, red, yellow);
+    z-index: -1;
+}
+
+.z-index-2 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    left: 0;
+    background-image: linear-gradient(to top left, purple, green);
+    z-index: 1;
+}
+
+::selection {
+    color: chocolate;
+}
+
+div.clear-container {
+    height: 100px;
+}
+
+p.text-clear {
+    clear: left;
+}
+
+img.float-img {
+    float: left;
+    height: 80px;
+}
+
+p.big-text {
+    text-indent: 30px;
+    line-height: 1.5;
+    font-variant: small-caps;
+    letter-spacing: 10px;
+    word-spacing: 30px;
+}

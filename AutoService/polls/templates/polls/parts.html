@@ -1,0 +1,130 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'polls/parts.css' %}">
+{% endblock %}
+
+{% block content %}
+<div>
+    <div>
+        <div style="padding: 2%; display: inline-block; margin-left: 18%; width: 60%;" class="update-container">
+            <h2>Availale parts:</h2>
+            <div>
+                <div style="display: inline-block; width: 40%;">
+                    <form method="get">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ search_form.search }}
+                            <button type="submit">Search</button><br>
+                            {% if search_form.search.errors %}
+                            <small class="form-text text-danger">{{ search_form.search.errors }}</small>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+                <div style="display: inline-block; width: 30%;">
+                    <form method="get">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ order_form.order }}
+                            <button type="submit">Order</button><br>
+                            {% if order_form.order.errors %}
+                            <small class="form-text text-danger">{{ order_form.order.errors }}</small>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="grid-container">
+            {% for part in part_list.all %}
+                <div style="text-align: center; margin-top: 2%">
+                    <center><img height="300" width="300" src="{{part.image.url}}"></center>
+                    <strong>Part:</strong> <a href={% url "polls:part" part.id %}>{{ part.name }}</a><br>
+                    <strong>Price:</strong> {{ part.price }} BYN<br>
+                    <strong>Type:</strong> {{ part.parttype }}<br>
+                    <form action={% url "polls:add_part_to_cart" part.id %}>
+                        {% csrf_token %}
+                        <input type="submit" class="mt-5" value="Add to cart" />
+                    </form>    
+                </div>
+            {% empty %}
+                <p>There are no available parts</p>
+                <br>
+            {% endfor %}
+            </div>
+            <hr>
+            <hr style="height: 5px; background: black; width: 80%; margin: 20px auto;">
+            <p style="text-align: center;">{{ quote }}</p>
+        </div>
+        <div style="margin-top: 4%; display: inline-block; width: 16%; vertical-align: top; margin-left: 1%;">
+            <div class="filter-container">
+                <form method="get">
+                    {% csrf_token %}
+                    <div>
+                        <div style="display: inline-block; width: 55%;">
+                            <label style="text-align: center;" for="{{ filter_form.devicetype.id_for_label }}">{{ filter_form.devicetype.label_tag }}</label>
+                            <div style="align: center">
+                                {{ filter_form.devicetype }}                            
+                            </div>
+                            {% if filter_form.devicetype.errors %}
+                            <small class="form-text text-danger">{{ filter_form.devicetype.errors }}</small>
+                            {% endif %}
+                        </div>
+                        <div style="display: inline-block; margin-left: 1%; width: 20%;">
+                            <label style="text-align: center;" for="{{ filter_form.devices.id_for_label }}">{{ filter_form.devices.label_tag }}</label>
+                            <div>
+                                {{ filter_form.devices }}                            
+                            </div>
+                            {% if filter_form.devices.errors %}
+                            <small class="form-text text-danger">{{ filter_form.devices.errors }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div>
+                        <div style="display: inline-block; width: 49%;">
+                            <label style="text-align: center;" for="{{ filter_form.parttype.id_for_label }}">{{ filter_form.parttype.label_tag }}</label>
+                            <div>
+                                {{ filter_form.parttype }}                            
+                            </div>
+                            {% if filter_form.parttype.errors %}
+                            <small class="form-text text-danger">{{ filter_form.parttype.errors }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div style="margin-left: 4%; width: 84%">
+                            <label style="text-align: center;" for="{{ filter_form.price_from.id_for_label }}">{{ filter_form.price_from.label_tag }}</label>
+                            <div>
+                                {{ filter_form.price_from }}                            
+                            </div>
+                            {% if filter_form.price_from.errors %}
+                            <small class="form-text text-danger">{{ filter_form.price_from.errors }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div style="display: inline-block; margin-left: 4%; width: 84%;">
+                            <label style="text-align: center;" for="{{ filter_form.price_to.id_for_label }}">{{ filter_form.price_to.label_tag }}</label>
+                            <div>
+                                {{ filter_form.price_to }}                            
+                            </div>
+                            {% if filter_form.price_to.errors %}
+                            <small class="form-text text-danger">{{ filter_form.price_to.errors }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div style="margin-left: 33%; width: 33%;">
+                            <div>
+                                <button type="submit" style="margin: auto auto;">Filter</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

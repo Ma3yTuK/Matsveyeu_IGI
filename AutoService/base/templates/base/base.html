@@ -1,0 +1,118 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="If you need to repair something - you are in the right place">
+    <link rel="icon" href="{% static 'base/images/icon.png' %}" type="image/png", alt="logo">
+    <title>DreamService</title>
+    <link rel="stylesheet" href="{% static 'base/global.css' %}">
+    {% block extrastyle %}
+    
+    {% endblock %}
+</head>
+<body>
+    <header>
+        <nav class="nav">
+            <div style="background: #f0f0f0; width: 100%;">
+              <div style="margin-left: 1%; display: inline-block; margin-top: 10px; width: 10%;" >
+                <img src="{% static 'base/images/icon.png' %}" style="display: inline-block; vertical-align: middle; width: 20%" alt="logo">
+                <a class="nice-font" style="text-decoration: none; color: black;" href={% url "about:home" %}>DreamService</a>
+              </div>
+              <ul style="vertical-align: top; list-style-type: none; display: inline-block; width: 55%; margin-left: 0; padding: 0;">
+                <li class="navitem">
+                  {% url 'about:home' as my_view %}
+                  <a class="navlink" style="{% if request.path == my_view %}color: #555555;{% endif %}" aria-current="page" href={{ my_view }}>Home</a>
+                </li>
+                <li class="navitem">
+                  {% url 'about:articles' as my_view %}
+                  <a class="navlink" style="{% if request.path == my_view %}color: #555555;{% endif %}" aria-current="page" href={{ my_view }}>Articles</a>
+                </li>
+                <li class="navitem">
+                  {% url 'about:about' as my_view %}
+                  <a class="navlink" style="{% if request.path == my_view %}color: #555555;{% endif %}" aria-current="page" href={{ my_view }}>About</a>
+                </li>
+                <li class="navitem">
+                  {% url 'about:faq' as my_view %}
+                  <a class="navlink" style="{% if request.path == my_view %}color: #555555;{% endif %}" aria-current="page" href={{ my_view }}>FAQ</a>
+                </li>
+                <li class="navitem">
+                  {% url 'about:policy' as my_view %}
+                  <a class="navlink" style="{% if request.path == my_view %}color: #555555;{% endif %}" aria-current="page" href={{ my_view }}>Policy</a>
+                </li>
+                <li class="navitem">
+                  {% url 'about:stats' as my_view %}
+                  <a class="navlink" style="{% if request.path == my_view %}color: #555555;{% endif %}" aria-current="page" href={{ my_view }}>Stats</a>
+                </li>
+                <li class="navitem">
+                  {% url 'about:vacancies' as my_view %}
+                  <a class="navlink" style="{% if request.path == my_view %}color: #555555;{% endif %}" aria-current="page" href={{ my_view }}>Vacancies</a>
+                </li>
+                <li class="navitem">
+                  {% url 'polls:parts' as my_view %}
+                  <a class="navlink" style="{% if request.path == my_view %}color: #555555;{% endif %}" aria-current="page" href={{ my_view }}>Parts</a>
+                </li>
+                <li class="navitem">
+                  {% url 'polls:services' as my_view %}
+                  <a class="navlink" style="{% if request.path == my_view %}color: #555555;{% endif %}" aria-current="page" href={{ my_view }}>Services</a>
+                </li>
+                <li class="navitem">
+                  {% url 'polls:reviews' as my_view %}
+                  <a class="navlink" style="{% if request.path == my_view %}color: #555555;{% endif %}" aria-current="page" href={{ my_view }}>Reviews</a>
+                </li>
+                <li class="navitem">
+                  {% url 'polls:workers' as my_view %}
+                  <a class="navlink" style="{% if request.path == my_view %}color: #555555;{% endif %}" aria-current="page" href={{ my_view }}>Workers</a>
+                </li>
+                <li class="navitem">
+                  {% url 'promo:promos' as my_view %}
+                  <a class="navlink" style="{% if request.path == my_view %}color: #555555;{% endif %}" aria-current="page" href={{ my_view }}>Promo codes</a>
+                </li>
+              </ul>
+              <ul style="vertical-align: top; list-style-type: none; display: inline-block; width: 33%; margin-left: 0; padding: 0;">
+                <li class="navitem-r">
+                  {% if request.user.is_authenticated %}
+                  <div class="dropdown-div">
+                    <button class="dropdown-button">{{request.user.username}}</button>
+                    <div style="position: absolute; background: #f0f0f0; padding: 1%;" class="dropdown-content">
+                      <a class="navlink" href={% url 'authentication:profile' %}>Profile</a><br>
+                      {% if request.user.role.name == "master" %}
+                      <a class="navlink" href={% url 'polls:jobs' %}>Jobs</a><br>
+                      {% endif %}
+                      <a class="navlink" href={% url 'authentication:logout' %}>Log out</a>
+                    </div>
+                  </div>  
+                  {% else %}
+                  {% url 'authentication:login' as my_view %}
+                  <a class="navlink" style="{% if request.path == my_view %}color: #555555;{% endif %}" href={% url 'authentication:login' %}>Log in</a>
+                  {% endif %}
+                </li>
+                <li class="navitem-r">
+                  {% url 'polls:cart' as my_view %}
+                  <a class="navlink" style="{% if request.path == my_view %}color: #555555;{% endif %}" aria-current="page" href={{ my_view }}>Cart</a>
+                </li>
+                <li class="navitem-r">
+                  <form method="post" action={% url 'polls:timezone' %}>
+                    {% csrf_token %}
+                    {{ timezone_form.timezone }}
+                    <button type="submit">Set</button>
+                  </form>
+                </li>
+              </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer class="text-center">
+      <div style="background: #f0f0f0; height: 60px; padding-top: 15px">
+        <strong><p>Have a nice day!</p>
+      </div>
+    </footer>
+    {% block extrascript %}{% endblock %}
+</body>
+</html>

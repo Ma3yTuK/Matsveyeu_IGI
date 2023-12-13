@@ -1,0 +1,37 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'polls/workers.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div>
+        <div style="display: inline-block; margin-left: 20%; width: 60%;" class="update-container">
+            <h2>Our workers:</h2>
+            <hr>
+            <div>
+            {% for user in user_list %}
+                <div class="flex-container">
+                    <div class="left">
+                        <strong><p class="margin-top: 2%" style="margin: 0;">{{ user.first_name }} {{ user.last_name }}</p></strong>
+                        <p style="margin: 0;">{{ user.role.name }}</p>
+                        <p style="margin: 0;">+375{{ user.number }}</p>
+                    </div>
+                    <img class="right" src="{{ user.image.url }}">
+                </div>
+                <hr>
+            {% empty %}
+                <div class="alert alert-secondary">
+                    <strong><p class="text-center">We don't have any</p></strong>
+                </div>
+            {% endfor %}
+            </div>
+            <hr style="height: 5px; background: black; width: 80%; margin: 20px auto;">
+            <p class="text-center">{{ quote }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

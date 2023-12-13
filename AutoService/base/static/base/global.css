@@ -1,0 +1,94 @@
+@import url("https://fonts.googleapis.com/css?family=Tangerine");
+
+.update-container {
+    padding: 60px;
+    background-color: #f0f0f0;
+}
+
+.nice-font {
+    font-family: 'Tangerine', serif;
+    font-size: 25px;
+    font-kerning: none;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+}
+
+body {
+    @media (max-width: 1000px) {
+        background: url('/static/base/images/background1.jpg');
+    };
+    @media (min-width: 1000px) {
+        background: url('/static/base/images/background2.jpeg');
+    };
+    padding: 0;
+    width: 100%;
+    margin: 0;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 5px;
+}
+
+label {
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.text-center {
+    text-align: center;
+}
+
+li.navitem {
+    float: left;
+    margin-left: 1%;
+}
+
+li.navitem-r {
+    float: right;
+    margin-right: 2%;
+}
+
+.dropdown-content {
+    display: none;
+}
+
+.dropdown-div:hover .dropdown-content {
+    display: block;
+}
+
+a.navlink {
+    text-decoration: none;
+    color: black;
+}
+
+a.navlink:visited {
+    color: gray;
+}
+
+a.navlink:hover {
+    color: lightblue;
+}
+
+.dropdown-button {
+    border: none;
+}
+
+.dropdown-button:hover {
+    color: lightblue;
+    background: inherit;
+}

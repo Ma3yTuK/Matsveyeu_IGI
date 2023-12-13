@@ -1,0 +1,272 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'sandbox/sandbox-js.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="offset-sm-2 col-sm-8 update-container">
+            <h1>Sandbox</h1>
+            <ul style="margin-top: 30px">
+                <li class="custom-marker">
+                    <form id="settingsForm">
+                        <label>
+                            <input type="checkbox" id="fontCheckbox" onchange="toggleElement('fontSizeRange')"> Change font size
+                        </label>
+                        <div id="fontSizeRangeDiv"></div>
+                        
+                        <label>
+                            <input type="checkbox" id="colorCheckbox" onchange="toggleElement('textColorPicker')"> Change font color
+                        </label>
+                        <div id="textColorPickerDiv"></div>
+                
+                        <label>
+                            <input type="checkbox" id="backgroundCheckbox" onchange="toggleElement('backgroundColorPicker')"> Change background color
+                        </label>
+                        <div id="backgroundColorPickerDiv"></div>
+                    </form>
+                </li><br>
+                <li>
+                    <h1>Генератор таблицы</h1>
+                    <label for="tableSize">Размер таблицы (n x n):</label>
+                    <input type="number" id="tableSize" min="2" value="4">
+                    <label for="maxSelected">Макс. выбранных в ряду:</label>
+                    <input type="number" id="maxSelected" min="1" value="1"><br>
+                    <button id="generateTable">Создать таблицу</button>
+                    <button id="addRowAndColumn">Добавить ряд и колонку</button>
+                    <button id="transposeTable">Транспонировать</button>
+                    <table id="myTable">
+                        <tr>
+                            <td>1</td>
+                        </tr>
+                    </table>
+                </li><br>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extrascript %}
+<script>
+    function createFontElement() {
+        const fontSizeRange = document.createElement('input');
+        fontSizeRange.type = 'range';
+        fontSizeRange.id = 'fontSizeRange';
+        fontSizeRange.min = '10';
+        fontSizeRange.max = '36';
+        fontSizeRange.step = '2';
+        fontSizeRange.value = '16'
+        fontSizeRange.addEventListener('input', applyFontSettings);
+    
+        const container = document.getElementById("fontSizeRangeDiv");
+        if (container) {
+            container.appendChild(fontSizeRange);
+        }
+    }
+    
+    function removeFontElement() {
+        const fontSizeRange = document.getElementById('fontSizeRange');
+        if (fontSizeRange) {
+            fontSizeRange.removeEventListener('input', applyFontSettings);
+            fontSizeRange.remove();
+        }
+    }
+    
+    function createColorElement() {
+        const textColorPicker = document.createElement('input');
+        textColorPicker.type = 'color';
+        textColorPicker.id = 'textColorPicker';
+        textColorPicker.addEventListener('input', applyColorSettings);
+    
+        const container = document.getElementById("textColorPickerDiv");
+        if (container) {
+            container.appendChild(textColorPicker);
+        }
+    }
+    
+    function removeColorElement() {
+        const textColorPicker = document.getElementById('textColorPicker');
+        if (textColorPicker) {
+            textColorPicker.removeEventListener('input', applyColorSettings);
+            textColorPicker.remove();
+        }
+    }
+    
+    function createBackgroundElement() {
+        const backgroundColorPicker = document.createElement('input');
+        backgroundColorPicker.type = 'color';
+        backgroundColorPicker.id = 'backgroundColorPicker';
+        backgroundColorPicker.value = '#ffffff'
+        backgroundColorPicker.addEventListener('input', applyBackgroundSettings);
+    
+        const container = document.getElementById("backgroundColorPickerDiv");
+        if (container) {
+            container.appendChild(backgroundColorPicker);
+        }
+    }
+    
+    function removeBackgroundElement() {
+        const backgroundColorPicker = document.getElementById('backgroundColorPicker');
+        if (backgroundColorPicker) {
+            backgroundColorPicker.removeEventListener('input', applyBackgroundSettings);
+            backgroundColorPicker.remove();
+        }
+    }
+
+    document.getElementById('fontCheckbox').addEventListener('change', function () {
+        if (this.checked) {
+            createFontElement();
+        } else {
+            removeFontElement();
+        }
+    });
+
+    document.getElementById('colorCheckbox').addEventListener('change', function () {
+        if (this.checked) {
+            createColorElement();
+        } else {
+            removeColorElement();
+        }
+    });
+
+    document.getElementById('backgroundCheckbox').addEventListener('change', function () {
+        if (this.checked) {
+            createBackgroundElement();
+        } else {
+            removeBackgroundElement();
+        }
+    });
+
+    function applyFontSettings() {
+        const fontSizeRange = document.getElementById('fontSizeRange');
+        document.body.style.fontSize = fontSizeRange.value + 'px';
+    }
+
+    function applyColorSettings() {
+        const textColorPicker = document.getElementById('textColorPicker');
+        document.body.style.color = textColorPicker.value;
+    }
+
+    function applyBackgroundSettings() {
+        const backgroundColorPicker = document.getElementById('backgroundColorPicker');
+        const container = document.querySelectorAll('.update-container')[0];
+        container.style.backgroundColor = backgroundColorPicker.value;
+        //const elements = document.getElementsByClassName('container');
+        //for (const element of elements) {
+            //element.style.backgroundColor = backgroundColorPicker.value;
+        //}
+    }
+
+</script>
+
+<script>
+    document.getElementById('generateTable').addEventListener('click', generateTable);
+    document.getElementById('addRowAndColumn').addEventListener('click', addRowAndColumn);
+    document.getElementById('transposeTable').addEventListener('click', transposeTable);
+    document.getElementById('myTable').addEventListener('click', highlightCell);
+
+    let tableSize = 4;
+    let maxSelected = 1;
+
+    function generateTable() {
+        tableSize = parseInt(document.getElementById('tableSize').value);
+        maxSelected = parseInt(document.getElementById('maxSelected').value);
+
+        let table = document.getElementById('myTable');
+        table.innerHTML = '';
+
+        for (let i = 0; i < tableSize; i++) {
+            let row = document.createElement('tr');
+            for (let j = 0; j < tableSize; j++) {
+                let cell = document.createElement('td');
+                cell.textContent = Math.floor(Math.random() * 100) + 1;
+                row.appendChild(cell);
+            }
+            table.appendChild(row);
+        }
+    }
+
+    function addRowAndColumn() {
+        tableSize++;
+        addRowToTable();
+        addColumnToTable();
+    }
+
+    function addRowToTable() {
+        let table = document.getElementById('myTable');
+        let newRow = document.createElement('tr');
+        for (let i = 0; i < tableSize - 1; i++) {
+            let newCell = document.createElement('td');
+            newCell.textContent = Math.floor(Math.random() * 100) + 1;
+            newRow.appendChild(newCell);
+        }
+        table.appendChild(newRow);
+    }
+
+    function addColumnToTable() {
+        let table = document.getElementById('myTable');
+        let rows = table.getElementsByTagName('tr');
+        for (let i = 0; i < tableSize; i++) {
+            let newCell = document.createElement('td');
+            newCell.textContent = Math.floor(Math.random() * 100) + 1;
+            rows[i].appendChild(newCell);
+        }
+    } 
+
+    function highlightCell(e) {
+        if (e.target.nodeName === 'TD') {
+            const selectedCount = countSelectedInRow(e.target.parentNode);
+            if (selectedCount >= maxSelected || hasNeighboringSelection(e.target)) {
+                return;
+            }
+
+            e.target.style.backgroundColor = isMultipleOfTwo(e.target.textContent) ? 'lightblue' : 'lightcoral';
+        }
+    }
+
+    function countSelectedInRow(row) {
+        let count = 0;
+        const cells = row.getElementsByTagName('td');
+        for (let i = 0; i < cells.length; i++) {
+            if (cells[i].style.backgroundColor !== '') {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    function isMultipleOfTwo(value) {
+        return parseInt(value) % 2 === 0;
+    }
+
+    function hasNeighboringSelection(cell) {
+        const row = cell.parentNode;
+        const cells = row.getElementsByTagName('td');
+        const index = [...cells].indexOf(cell);
+        const leftNeighbor = index > 0 ? cells[index - 1] : null;
+        const rightNeighbor = index < cells.length - 1 ? cells[index + 1] : null;
+        return (leftNeighbor && leftNeighbor.style.backgroundColor !== '') || (rightNeighbor && rightNeighbor.style.backgroundColor !== '');
+    }
+
+    function transposeTable() {
+        let table = document.getElementById('myTable');
+        let rows = table.getElementsByTagName('tr');
+        
+        for (let i = 0; i < tableSize; i++) {
+            for (let j = i + 1; j < tableSize; j++) {
+                let cell_1 = rows[i].getElementsByTagName('td')[j];
+                let cell_2 = rows[j].getElementsByTagName('td')[i];
+    
+                let tempValue = cell_1.textContent;
+                cell_1.textContent = cell_2.textContent;
+                cell_2.textContent = tempValue;
+            }
+        }
+    }
+</script>
+{% endblock %}

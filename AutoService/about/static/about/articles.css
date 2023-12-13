@@ -1,0 +1,15 @@
+@import "base.css";
+
+.article-img {
+    width: 100%;
+    height: auto;
+}
+
+.for-bottom-div {
+    position: relative;
+}
+
+.for-bottom-div .to-bottom {
+    position: absolute;
+    bottom: 0;
+}

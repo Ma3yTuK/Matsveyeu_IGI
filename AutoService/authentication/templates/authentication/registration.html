@@ -1,0 +1,130 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'authentication/registration.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-sm">
+    <div style="margin-left: 20%; width: 60%;" class="update-container">
+        <h2 class="mb-4">Register</h2>
+        <div id="result"></div>
+        <form method="post">
+        {{ form.non_field_errors }}
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="small mb-1" for="birthdate">birthdate:</label><br>
+            <input type="date" id="birthdate" required>
+        </div>
+        <div class="form-group">
+            <label for="{{ form.username.id_for_label }}" style="width: 40%">{{ form.username.label_tag }}</label>
+            <div style="margin-left: 30%; display: inline-block; width: 100px;">
+                {{ form.username }}
+                {% if form.username.errors %}
+                <small class="form-text text-danger">{{ form.username.errors }}</small>
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="{{ form.first_name.id_for_label }}" style="width: 40%">{{ form.first_name.label_tag }}</label>
+            <div style="margin-left: 30%; display: inline-block; width: 100px;">
+                {{ form.first_name }}
+                {% if form.first_name.errors %}
+                <small class="form-text text-danger">{{ form.first_name.errors }}</small>
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="{{ form.last_name.id_for_label }}" style="width: 40%">{{ form.last_name.label_tag }}</label>
+            <div style="margin-left: 30%; display: inline-block; width: 100px;">
+                {{ form.last_name }}
+                {% if form.last_name.errors %}
+                <small class="form-text text-danger">{{ form.last_name.errors }}</small>
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="{{ form.number.id_for_label }}" style="width: 40%">{{ form.number.label_tag }}</label>
+            <div style="margin-left: 30%; display: inline-block; width: 100px;">
+                {{ form.number }}
+                {% if form.number.errors %}
+                <small class="form-text text-danger">{{ form.number.errors }}</small>
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="{{ form.email.id_for_label }}" style="width: 40%">{{ form.email.label_tag }}</label>
+            <div style="margin-left: 30%; display: inline-block; width: 100px;">
+                {{ form.email }}
+                {% if form.email.errors %}
+                <small class="form-text text-danger">{{ form.email.errors }}</small>
+                {% endif %}
+            </div>
+        </div>
+        <hr>
+        <div class="form-group">
+            <label for="{{ form.timezone.id_for_label }}" style="width: 20%">{{ form.timezone.label_tag }}</label>
+            <div style="margin-left: 30%; display: inline-block; width: 100px;">
+                {{ form.timezone }}
+                {% if form.timezone.errors %}
+                <small class="form-text text-danger">{{ form.timezone.errors }}</small>
+                {% endif %}
+            </div>
+        </div>
+        <hr>
+        <div class="form-group">
+            <label for="{{ form.password1.id_for_label }}" style="width: 40%">{{ form.password1.label_tag }}</label>
+            <div style="margin-left: 30%; display: inline-block; width: 100px;">
+                {{ form.password1 }}
+                {% if form.password1.errors %}
+                <small class="form-text text-danger">{{ form.password1.errors }}</small>
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="{{ form.password2.id_for_label }}" style="width: 40%">{{ form.password2.label_tag }}</label>
+            <div style="margin-left: 30%; display: inline-block; width: 100px;">
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                <small class="form-text text-danger">{{ form.password2.errors }}</small>
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-group">
+            <div style="margin-left: 30%;">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extrascript %}
+<script>
+    const birthdateInput = document.getElementById('birthdate');
+    const resultDiv = document.getElementById('result');
+
+    birthdateInput.addEventListener('change', function () {
+        const birthdate = new Date(birthdateInput.value);
+        const currentDate = new Date();
+        let age = currentDate.getFullYear() - birthdate.getFullYear();
+        birthdate.setFullYear(currentDate.getFullYear());
+        const dayOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'][birthdate.getDay()];
+
+        let message = `Your age: ${age}.<br> Your birth day: ${dayOfWeek}.`;
+
+        if (age >= 18) {
+            message += ' Welcome!';
+        } else {
+            message += ' You are too young. To access this site you need your parent\'s approval';
+            alert('You need your parent\'s approval.');
+        }
+
+        resultDiv.innerHTML = message;
+        resultDiv.style.color = "red";
+    });
+</script>
+{% endblock %}

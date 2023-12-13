@@ -1,0 +1,25 @@
+@import "base.css";
+
+h1 {
+    font-size: 30px;
+}
+
+h2 {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+ol {
+    font-size: 20px;
+}
+
+.dropdown {
+}
+
+.dropdown-child {
+    display: none;
+}
+
+.dropdown:hover .dropdown-child {
+    display: block;
+}

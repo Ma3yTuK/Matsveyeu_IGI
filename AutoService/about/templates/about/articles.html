@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'about/articles.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div style="margin-left: 20%; width: 60%" class="update-container">
+            <h2>News:</h2>
+            {% for article in article_list.all %}
+            <hr>
+            <article>
+                <div style="display: inline-block; height: 100px; background: black;">
+                    <image style="height: 100%;" src="{{article.image.url}}" class="article-img">
+                </div>
+                <div style="display: inline-block; vertical-align: top; width: 30%; height: 100px;" class="for-bottom-div">
+                    <strong>{{ article.header }}</strong><br>
+                    {{ article.datetime }}
+                    <form class="to-bottom" action={% url "about:article" article.id %}>
+                        {% csrf_token %}
+                        <input type="submit" class="mt-5" value="Read more" />
+                    </form>
+                </div>
+            </article>
+            {% empty %}
+                <p>There are no news</p>
+            {% endfor %}
+            <hr class="margin-top: 5%">
+            <hr style="height: 5px; background: black; width: 80%; margin: 20px auto;">
+            <p style="text-align: center;">{{ quote }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'about/stats.css' %}">
+{% endblock %}
+
+{% block content %}
+<div>
+    <div style="margin-left: 10%; width: 80%" class="update-container">
+        <center><img src="{{ chart }}" class="img-fluid"></center>
+    </div>
+</div>
+{% endblock %}

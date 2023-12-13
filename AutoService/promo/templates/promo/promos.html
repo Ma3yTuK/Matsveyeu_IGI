@@ -1,0 +1,29 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'promo/promos.css' %}">
+{% endblock %}
+
+{% block content %}
+<div>
+    <div style="margin-left: 10%; width: 80%;" class="update-container">
+        <h2>Promo codes:</h2>
+        <ul>
+        {% for promo in promo_list %}
+        <li style="margin-top: 2%;">
+            <strong>Promo:</strong> {{ promo.name }}<br>
+            {% if promo.info %}
+            <strong>Info:</strong> {{ promo.info }}
+            {% endif %}
+        </li>
+        {% empty %}
+            <strong>There are no active promos.</strong>
+        {% endfor %}
+        </ul>
+        <hr style="height: 5px; background: black; width: 80%; margin: 20px auto;">
+        <p style="text-align: center;">{{ quote }}</p>
+    </div>
+</div>
+{% endblock %}
