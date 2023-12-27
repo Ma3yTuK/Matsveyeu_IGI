@@ -76,7 +76,7 @@
                   {% if request.user.is_authenticated %}
                   <div class="dropdown-div">
                     <button class="dropdown-button">{{request.user.username}}</button>
-                    <div style="position: absolute; background: #f0f0f0; padding: 1%;" class="dropdown-content">
+                    <div style="position: absolute; background: #f0f0f0; padding: 1%; width: 100px;" class="dropdown-content">
                       <a class="navlink" href={% url 'authentication:profile' %}>Profile</a><br>
                       {% if request.user.role.name == "master" %}
                       <a class="navlink" href={% url 'polls:jobs' %}>Jobs</a><br>

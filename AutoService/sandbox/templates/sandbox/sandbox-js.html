@@ -10,6 +10,11 @@
 <div class="container-fluid">
     <div class="row">
         <div class="offset-sm-2 col-sm-8 update-container">
+            <section id="top">
+                <h2 id="text">Sandbox</h2>
+                <img src="{% static 'base/images/Left.png' %}" id="left" />
+                <img src="{% static 'base/images/Right.png' %}" id="right" />
+            </section>
             <h1>Sandbox</h1>
             <ul style="margin-top: 30px">
                 <li class="custom-marker">
@@ -31,20 +36,54 @@
                     </form>
                 </li><br>
                 <li>
-                    <h1>Генератор таблицы</h1>
-                    <label for="tableSize">Размер таблицы (n x n):</label>
+                    <h3>Table gen</h3>
+                    <label for="tableSize">Table size:</label>
                     <input type="number" id="tableSize" min="2" value="4">
-                    <label for="maxSelected">Макс. выбранных в ряду:</label>
+                    <label for="maxSelected">Limit of elements in row:</label>
                     <input type="number" id="maxSelected" min="1" value="1"><br>
-                    <button id="generateTable">Создать таблицу</button>
-                    <button id="addRowAndColumn">Добавить ряд и колонку</button>
-                    <button id="transposeTable">Транспонировать</button>
+                    <button id="generateTable">Create</button>
+                    <button id="addRowAndColumn">Insert row and column</button>
+                    <button id="transposeTable">Transpose</button>
                     <table id="myTable">
                         <tr>
                             <td>1</td>
                         </tr>
                     </table>
                 </li><br>
+                <li>
+                    <h3>Task 10</h3>
+                    <div id="output"></div>
+                </li><br>
+                <li>
+                    <h3>Cards</h3>
+                    <div class="card-wrapper" style="height: 200px;">
+                        <div class="card" style="background: blue; height: 100%;">
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <h3>Task 11</h3>
+                    <form id="clientsForm">
+                        <label for="name">Client name:</label>
+                        <input type="text" id="name" name="name" required>
+                        <label for="surname">Client surname:</label>
+                        <input type="text" id="surname" name="surname" required>
+                        <label for="physics">Account number:</label>
+                        <input type="number" id="accNum" name="number" required>
+                        <label for="math">Account value:</label>
+                        <input type="number" id="accVal" name="value" required><br>
+                        <button type="button" id="saveButton">Save</button>
+                        <button type="button" id="searchButton">Search</button>
+                        <button type="button" id="clearStorageButton">Clear</button>
+            
+                    </form>
+                    <div id="result">
+                        <h2>Client list:</h2>
+                        <ul id="clientsList"></ul>
+                        <h2>Search results:</h2>
+                        <ul id="resultsList"></ul>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
@@ -269,4 +308,241 @@
         }
     }
 </script>
+
+<script>
+    function Part(name, device) {
+        this._name = name;
+        this._device = device;
+    }
+    
+    Object.defineProperty(Part.prototype, 'partInfo', {
+        get: function () {
+            return `${this._name} for ${this._device}`;
+        }
+    });
+    
+    Object.defineProperty(Part.prototype, 'name', {
+        get: function () {
+            return this._name;
+        },
+        set: function (newName) {
+            this._name = newName;
+        }
+    });
+
+    Object.defineProperty(Part.prototype, 'device', {
+        get: function () {
+            return this._device;
+        },
+        set: function (newDevice) {
+            this._device = newDevice;
+        }
+    });
+    
+    function Processor(name, device, performance) {
+        Part.call(this, name, device);
+        this._performance = performance;
+    }
+    
+    // Наследование прототипа
+    Processor.prototype = Object.create(Part.prototype);
+    // Comedy.prototype.constructor = Comedy;
+    
+    Object.defineProperty(Processor.prototype, 'performance', {
+        get: function () {
+            return this._performance;
+        },
+        set: function (newPerformance) {
+            this._performance = newPerformance;
+        }
+    });
+    
+    const part = new Part("Apple A10", "Iphone 6");
+    document.getElementById('output').innerText = `Part info: ${part.partInfo}`;
+    
+    const processor = new Processor("Apple A12", "Iphone 7", "200000flops");
+    document.getElementById('output').innerText += `\nProcessor Info: ${processor.partInfo}`;
+    document.getElementById('output').innerText += `\nProcessor performance: ${processor.performance}`;
+
+    class PartClass {
+        constructor(name, device) {
+            this._name = name;
+            this._device = device;
+        }
+    
+        get partInfo() {
+            return `${this._name} for ${this._device}`;
+        }
+
+        get name() {
+            return this._name;
+        }
+
+        set name(newName) {
+            this._name = newName;
+        }
+
+        get device() {
+            return this._device;
+        }
+
+        set device(newDevice) {
+            this._device = newDevice;
+        }
+    }
+    
+    class ProcessorClass extends PartClass {
+        constructor(name, device, performance) {
+            super(name, device);
+            this._performance = performance;
+        }
+    
+        get performance() {
+            return this._performance;
+        }
+
+        set performance(newPerformance) {
+            this._performance = newPerformance;
+        }
+    }
+    
+
+    // Демонстрация использования
+    const partClass = new PartClass("Apple A10", "Iphone 6");
+    document.getElementById('output').innerText += `\nPart class info: ${partClass.partInfo}`;
+    
+    const processorClass = new ProcessorClass("Apple A12", "Iphone 7", "200000flops");
+    document.getElementById('output').innerText += `\nProcessor class Info: ${processorClass.partInfo}`;
+    document.getElementById('output').innerText += `\nProcessor class performance: ${processorClass.performance}`;
+
+</script>
+
+<script>
+    const left = document.querySelector('#left');
+    const right = document.querySelector('#right');
+    const text = document.querySelector('#text');
+
+    window.addEventListener('scroll',()=>{
+        let value = scrollY;
+        left.style.left = `-${value/0.7}px`;
+        right.style.left = `${value/0.7}px`;
+        text.style.bottom = `-${value}px`;
+    })
+</script>
+
+<script>
+    const cards = document.querySelectorAll(".card-wrapper");
+
+    cards.forEach(
+    card_w => {
+      
+      const card = card_w.querySelector(".card");  
+    
+      card_w.addEventListener('mousemove', event=>{
+       //console.log(card_w.getBoundingClientRect());
+       const [x, y] = [event.offsetX, event.offsetY];
+       const rect = card_w.getBoundingClientRect();
+       const [width, height] = [rect.width, rect.height];
+       const middleX = width / 2;
+       const middleY = height / 2;
+       const offsetX = ((x - middleX) / middleX) * 25;
+       const offsetY = ((y - middleY) / middleY) * 25;
+       const offX = 50 + ((x - middleX) / middleX) * 25;
+       const offY = 50 - ((y - middleY) / middleY) * 20;
+       card.style.setProperty("--rotateX", 1 * offsetX + "deg");
+       card.style.setProperty("--rotateY", -1 * offsetY + "deg");
+       card.style.setProperty("--posx", offX + "%");
+       card.style.setProperty("--posy", offY + "%");
+      });
+      card_w.addEventListener('mouseleave', eve=>{
+        
+        card.style.animation = 'reset-card 1s ease';
+        card.addEventListener("animationend", e=>{
+          card.style.animation = 'unset';
+          card.style.setProperty("--rotateX", "0deg");
+          card.style.setProperty("--rotateY", "0deg");
+          card.style.setProperty("--posx", "50%");
+          card.style.setProperty("--posy", "50%");
+        }, {
+          once: true
+        });
+      });
+    });
+</script>
+
+<script>
+    const clients = JSON.parse(localStorage.getItem('clients')) || [];
+
+    document.getElementById('clientsForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+    });
+
+    document.getElementById('saveButton').addEventListener('click', function () {
+        const name = document.getElementById('name').value;
+        const surname = document.getElementById('surname').value;
+        const accNumber = parseInt(document.getElementById('accNum').value);
+        const accValue = parseInt(document.getElementById('accVal').value);
+
+        const client = {
+            name: name,
+            surname: surname,
+            accNumber: accNumber,
+            accValue: accValue,
+        };
+
+        clients.push(client);
+
+        gen();
+
+        localStorage.setItem('clients', JSON.stringify(clients));
+        document.getElementById('clientsForm').reset();
+    });
+
+    function gen()
+    {
+        let clientsList = document.getElementById('clientsList');
+        clientsList.innerHTML = '';
+        clients.forEach(client => {
+            let listItem = document.createElement('li');
+            listItem.textContent = `${client.name} ${client.surname} ${client.accValue} ${client.accNumber}`;
+            clientsList.appendChild(listItem);
+        })
+    }
+
+    document.getElementById('searchButton').addEventListener('click', function () {
+        const resultsList = document.getElementById('resultsList');
+        resultsList.innerHTML = '';
+
+        clientsGrouped = Object.groupBy(clients, client => { 
+            const keyy = { name: client.name, surname: client.surname };
+            return keyy;
+        });
+        
+        for (const key in clientsGrouped)
+        {
+            const inClients = clientsGrouped[key];
+            if (inClients.length > 1)
+            {
+                let value = 0;
+                inClients.forEach(client => {
+                    value += client.accValue;
+                })
+                const listItem = document.createElement('li');
+                listItem.textContent = `${inClients[0].name} ${inClients[0].surname} ${value}`;
+                resultsList.appendChild(listItem);
+            }
+        }
+    });
+
+    document.getElementById('clearStorageButton').addEventListener('click', function () {
+        localStorage.clear();
+        clients.length = 0;
+        const clientsList = document.getElementById('clientsList');
+        clientsList.innerHTML = '';
+        const resultsList = document.getElementById('resultsList');
+        resultsList.innerHTML = '';
+    });
+    gen();
+</script>
+
 {% endblock %}
